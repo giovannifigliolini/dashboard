@@ -1,4 +1,4 @@
-import { signal } from '@angular/core';
+import { computed, signal } from '@angular/core';
 import { Widget } from '../models/dashboard';
 import { SubscribersComponent } from '../pages/dashboard/widgets/subscribers/subscribers.component';
 import { ViewsComponent } from '../pages/dashboard/widgets/views/views.component';
@@ -21,6 +21,17 @@ export class DashboardService {
       content: ViewsComponent,
     },
   ]);
+
+  addedWidgets = signal<Widget[]>([]);
+
+  widgetsToAdd = computed(() => {
+    const addedIds = this.addedWidgets().map((widget) => widget.id);
+    return this.widgets().filter((widget) => !addedIds.includes(widget.id));
+  })
+
+  addWidget(w : Widget){
+    this.addedWidgets.set([...this.addedWidgets(), {...w}]);
+  }
 
   constructor() {}
 }

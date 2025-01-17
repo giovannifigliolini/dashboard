@@ -1,12 +1,30 @@
 <div class="container p-3">
-  <div class="row">
-    <h3>Channel Dashboard</h3>
+  <div class="row d-flex justify-content-between">
+    <div class="col-auto">
+      <h3>Channel Dashboard</h3>
+    </div>
+    <div class="col-auto">
+      <button mat-raised-button [mat-menu-trigger-for]="widgetMenu">
+        <mat-icon>add_circle</mat-icon>
+        Add Widget
+      </button>
+      <mat-menu #widgetMenu="matMenu">
+        @for(w of store.widgetsToAdd(); track w.id){
+        <button mat-menu-item (click)="store.addWidget(w)">
+          {{ w.label }}
+        </button>
+
+        } @empty{
+        <p mat-menu-item disabled>No more widgets to add</p>
+        }
+      </mat-menu>
+    </div>
   </div>
   <div class="row">
-    @for(w of store.widgets(); track w.id){
-      <div class="col-6">
-        <app-widget [data]="w" />
-      </div>
+    @for(w of store.addedWidgets(); track w.id){
+    <div class="col-6">
+      <app-widget [data]="w" />
+    </div>
     }
   </div>
 </div>
