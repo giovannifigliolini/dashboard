@@ -1,1 +1,6 @@
-<p>widget works!</p>
+<div class="container mat-elevation-z3 rounded">
+    <div class="row p-3">
+        <h4>{{data().label}}</h4>
+        <ng-container [ngComponentOutlet]="data().content"></ng-container>
+    </div>
+</div>
